@@ -1,0 +1,46 @@
+<shared-topbar></shared-topbar>
+<shared-sidebar [NameSidebar]="Namesidebar"></shared-sidebar>
+<p-card>
+    <p-toolbar>
+        <div class="p-toolbar-group-start">
+            <p-selectButton [options]="navigationOptions" [(ngModel)]="value" optionLabel="label" optionValue="value" (onChange)="redirectView($event)">
+                <ng-template let-option pTemplate="selected">
+                    <i [class]="option.icon"></i> {{option.label}}
+                </ng-template>
+            </p-selectButton>
+        </div>
+        <div class="p-toolbar-group-center">
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText placeholder="Search" />
+            </span>
+        </div>
+        <div class="p-toolbar-group-end">
+            <p-button (onClick)="showFormProduct();" label="Agregar Producto" icon="pi pi-plus-circle"></p-button>
+        </div>
+    </p-toolbar>
+    <br>
+    <p-dialog header="Producto Creado" [modal]="true" [(visible)]="Productnew" [style]="{width: '40vw'}" [breakpoints]="{ '960px': '75vw' }">
+        <p class="m-0">
+            <product-info-product [Product]="product"></product-info-product>
+        </p>
+    </p-dialog>
+    <p-dialog [header]="TitleProduct" [modal]="true" [(visible)]="ProductView" [style]="{width: '40vw'}" [breakpoints]="{ '960px': '75vw' }">
+        <p class="m-0">
+            <product-form-product (newData)="newData($event)" (buttonClose)="ProductView = false" [Mode]="Mode"></product-form-product>
+        </p>
+    </p-dialog>
+    <!-- Cargar rutas hijas -->
+    <router-outlet></router-outlet>
+</p-card>
+<p-dialog [closable]="false" [(visible)]="loading" [modal]="true" [draggable]="false"
+    [resizable]="false" [style]="{width: '25vw'}" [breakpoints]="{ '960px': '75vw' }">
+    <div class="flex flex-column">
+        <div class="flex align-items-center justify-content-center">
+            <p-progressSpinner styleClass="w-8rem h-8rem" strokeWidth="4"></p-progressSpinner>
+        </div>
+        <div class="flex align-items-center justify-content-center">
+            <span class="text-2xl font-medium">Cargando</span>
+        </div>  
+    </div>
+</p-dialog>

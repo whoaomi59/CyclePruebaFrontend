@@ -1,0 +1,65 @@
+<div class="grid border-card border-round pt-2">
+    <div class="col-12 md:col-6 p-2 border-round content-img">
+        <img [src]="product?.image" alt="" class="w-full md:h-8rem h-14rem">
+    </div>
+    <div class="col-12 md:col-6">
+        <div class="grid h-full">
+            <div class="col-12">
+                <span class="pl-2 md:text-xl text-3xl font-bold ">{{ product?.title | slice:0:12 | titlecase }}</span>
+            </div>
+            <div class="col-12">
+                <div class="">
+                    <i class="pi pi-star" style="font-size: 1rem"></i> <span class="md:text-base font-bold md:text-base text-xl"> Categoría</span>
+                </div><br>
+                <span class="md:text-base text-xl">{{ product?.category | titlecase }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="grid p-2">
+            <div class="col-12 text-center content-second background-botons">
+                <span class="font-medium md:text-xl text-2xl">Datos Generales</span>
+            </div>
+            <div class="col-12">
+                <div class="grid">
+                    <div class="col-12">
+                        <span class="font-bold md:text-base text-2xl">Descripción: </span><span class="md:text-base text-2xl">{{ product?.description | slice:0:60}}</span>
+                    </div>
+                    <div class="col-12">
+                        <span class="font-bold md:text-base text-2xl">Precio: </span><span class="md:text-base text-2xl">{{ product?.price }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 background-botons">
+        <div class="flex justify-content-between p-3">
+            <i class="pi pi-eye" (click)="viewInfoProduct(product!.id)" style="font-size: 1.5rem; color: rgb(10, 161, 252); cursor: pointer;"></i>
+            <i class="pi pi-pencil" (click)="putProduct(product!.id)" style="font-size: 1.5rem; color: rgb(10, 161, 252); cursor: pointer;"></i>
+            <i class="pi pi-trash" (click)="deleteProduct(product!.id)" style="font-size: 1.5rem; color: rgb(10, 161, 252); cursor: pointer;"></i>
+        </div>
+    </div>
+</div>
+<p-toast position="bottom-right"></p-toast>
+<p-dialog header="Información de Producto" [modal]="true" [(visible)]="ProductInfo" [style]="{width: '40vw'}" [breakpoints]="{ '960px': '75vw' }" [draggable]="false" [resizable]="false">
+    <p class="m-0">
+        <product-info-product [Product]="productInfo"></product-info-product>
+     </p>
+</p-dialog>
+<p-dialog [header]="TitleProductPut" [modal]="true" [(visible)]="ProductPut" [style]="{width: '40vw'}" [breakpoints]="{ '960px': '75vw' }" [draggable]="false" [resizable]="false">
+    <p class="m-0">
+        <product-form-product  [Mode]="Mode" [IdProduct]="ProductId" (buttonClose)="ProductPut = false"></product-form-product>
+    </p>
+</p-dialog>
+<p-dialog [closable]="false" [(visible)]="loading" [modal]="true" [draggable]="false"
+    [resizable]="false" [style]="{width: '25vw'}" [breakpoints]="{ '960px': '75vw' }">
+    <div class="flex flex-column">
+        <div class="flex align-items-center justify-content-center">
+            <p-progressSpinner styleClass="w-8rem h-8rem" strokeWidth="4"></p-progressSpinner>
+        </div>
+        <div class="flex align-items-center justify-content-center">
+            <span class="text-2xl font-medium">Cargando</span>
+        </div>  
+    </div>
+</p-dialog>
+<p-confirmDialog [style]="{width: '30vw'}" [breakpoints]="{ '960px': '75vw' }"></p-confirmDialog>

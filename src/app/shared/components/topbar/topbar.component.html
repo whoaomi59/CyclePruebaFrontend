@@ -1,0 +1,17 @@
+<p-toolbar>
+    <div class="p-toolbar-group-start">
+        <p-menu #menu [model]="ItemsMenu" [popup]="true"></p-menu>
+        <p-button icon="pi pi-bars" (click)="menu.toggle($event)" [outlined]="true"></p-button>
+        <img src="../../../../assets/menu.png" class="md:h-5rem h-4rem" height="80px" alt="">
+    </div>
+    <div class="p-toolbar-group-end">
+        <button type="button" class="btn-header" (click)="showUser();">  
+            <img src="../../../../assets/no-image.png" alt="" class="img-profile" width="50px" > 
+        </button>
+    </div>
+</p-toolbar>
+<p-dialog header="Información Usuario" [modal]="true" [(visible)]="UserInfo" [style]="{width: '40vw'}" [breakpoints]="{ '960px': '75vw' }">
+    <p class="m-0">
+        <shared-infouser></shared-infouser>
+    </p>
+</p-dialog>

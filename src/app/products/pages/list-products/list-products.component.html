@@ -1,0 +1,62 @@
+<p-table 
+    [rows]="5" 
+    [value]="products" 
+    [paginator]="true">
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width:15%" class="text-center">Producto</th>
+            <th style="width:22%" class="text-center">Nombre</th>
+            <th style="width:15%" class="text-center">Categoria</th>
+            <th style="width:10%" class="text-center">Precio</th>
+            <th style="width:18%" class="text-center">Descripción</th>
+            <th style="width:20%" class="text-center">Acciones</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-products>
+        <tr>
+            <td class="text-center">
+                <img [src]="products.image" (error)="handleImageError($event)" alt="product_img" width="100px" height="90px">
+            </td>
+            <td class="text-justify">{{ products.title | titlecase}}</td>
+            <td class="text-center">{{ products.category | titlecase}}</td>
+            <td class="text-center">{{ products.price }}</td>
+            <td class="text-justify">{{  products.description | titlecase | slice:1:55}}</td>
+            <td>
+                <div class="flex justify-content-between">
+                    <p-button class="align-items-center" (onClick)="viewInfoProduct(products.id)" icon="pi pi-eye" severity="info" [outlined]="true"></p-button>
+                    <p-button class="align-items-center" (onClick)="putProduct(products.id)" icon="pi pi-pencil" severity="warning" [outlined]="true"></p-button>
+                    <p-button class="align-items-center" (onClick)="deleteProduct(products.id)"  icon="pi pi-trash" severity="danger" [outlined]="true"></p-button>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td class="text-center" colspan="6">Producto no Encontrado</td>
+        </tr>
+    </ng-template>
+</p-table>
+<p-toast position="bottom-right"></p-toast>
+<p-confirmDialog [style]="{width: '30vw'}" [breakpoints]="{ '960px': '75vw' }">
+</p-confirmDialog>
+<p-dialog header="Información de Producto" [modal]="true" [(visible)]="ProductInfo" [style]="{width: '40vw'}" [breakpoints]="{ '960px': '75vw' }" [draggable]="false" [resizable]="false">
+    <p class="m-0">
+        <product-info-product [Product]="product"></product-info-product>
+    </p>
+</p-dialog>
+<p-dialog [header]="TitleProductPut" [modal]="true" [(visible)]="ProductPut" [style]="{width: '40vw'}" [breakpoints]="{ '960px': '75vw' }" [draggable]="false" [resizable]="false">
+    <p class="m-0">
+        <product-form-product (sendData)="dataUpdate($event)" [Mode]="Mode" [IdProduct]="ProductId" (buttonClose)="ProductPut = false"></product-form-product>
+    </p>
+</p-dialog>
+<p-dialog [closable]="false" [(visible)]="loading" [modal]="true" [draggable]="false"
+    [resizable]="false" [style]="{width: '25vw'}" [breakpoints]="{ '960px': '75vw' }">
+    <div class="flex flex-column">
+        <div class="flex align-items-center justify-content-center">
+            <p-progressSpinner styleClass="w-8rem h-8rem" strokeWidth="4"></p-progressSpinner>
+        </div>
+        <div class="flex align-items-center justify-content-center">
+            <span class="text-2xl font-medium">Cargando</span>
+        </div>  
+    </div>
+</p-dialog>

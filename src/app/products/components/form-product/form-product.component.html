@@ -1,0 +1,122 @@
+<form class="grid pt-1" [formGroup]="productForm" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div class="col-12">
+        <div class="flex flex-column gap-2">
+            <label>Nombre de Producto</label>
+            <input 
+                pInputText 
+                class="p-inputtext-sm"
+                formControlName="title"
+            />
+        </div>
+        <span *ngIf="isValidfield('title')" class="text-red-500 font-normal text-base">
+            {{ getErrors('title')}}
+        </span>
+    </div>
+    <div class="col-12">
+        <div class="flex flex-column gap-2">
+            <label>Descripción</label>
+            <textarea 
+                rows="5" 
+                cols="30" 
+                pInputTextarea 
+                formControlName="description">
+            </textarea>
+        </div>
+        <span *ngIf="isValidfield('description')" class="text-red-500 font-normal text-base">
+            {{ getErrors('description')}}
+        </span>
+    </div>
+    <div class="col-12">
+        <div class="flex flex-column gap-2">
+            <label>Url Imagen</label>
+            <input 
+                pInputText 
+                class="p-inputtext-sm"
+                formControlName="image"
+            />
+        </div>
+        <span *ngIf="isValidfield('image')" class="text-red-500 font-normal text-base">
+            {{ getErrors('image')}}
+        </span>
+    </div>
+    <div class="col-12">
+        <label>Categorias</label>
+        <div class="grid">
+            <div class="col-12 md:col-6">
+                <p-radioButton 
+                    label="Accesories"
+                    formControlName="category"
+                    class="style-roboto"
+                    value="accesories">
+                </p-radioButton>
+            </div>
+            <div class="col-12 md:col-6">
+                <p-radioButton 
+                    label="Clothing"
+                    formControlName="category"
+                    class="style-roboto"
+                    value="clothing">
+                </p-radioButton>
+            </div>
+            <div class="col-12 md:col-6">
+                <p-radioButton 
+                    label="Electronics"
+                    formControlName="category"
+                    class="style-roboto"
+                    value="electronics">
+                </p-radioButton>
+            </div>
+            <div class="col-12 md:col-6">
+                <p-radioButton 
+                    label="Fitness"
+                    formControlName="category"
+                    class="style-roboto"
+                    value="fitness">
+                </p-radioButton>
+            </div>
+        </div>
+        <span *ngIf="isValidfield('category')" class="text-red-500 font-normal text-base">
+            {{ getErrors('category')}}
+        </span>
+    </div>
+    <div class="col-12">
+        <div class="col-12">
+            <div class="flex flex-column gap-2">
+                <label>Precio</label>
+                <p-inputNumber
+                    inputId="integeronly" 
+                    formControlName="price">
+                </p-inputNumber>
+            </div>
+        </div>
+        <span *ngIf="isValidfield('price')" class="text-red-500 font-normal text-base">
+            {{ getErrors('price')}}
+        </span>
+    </div>
+    <div class="col-12">
+        <ng-container *ngIf="Mode === 'POST'; else Put">
+            <div class="flex justify-content-between">
+                <p-button type="button" (click)="CancelForm()" label="Cancelar" icon="pi pi-times" styleClass="p-button-danger p-button-outlined"></p-button>
+                <p-button type="submit" label="Registar" icon="pi pi-save" styleClass="p-button-success p-button-outlined"></p-button>
+            </div>
+        </ng-container>
+        <ng-template #Put>
+            <div class="flex justify-content-end">
+                <p-button type="submit" label="Actualizar" icon="pi pi-save" styleClass="p-button-warning p-button-outlined"></p-button>
+            </div>
+        </ng-template>
+    
+    </div>
+</form>
+<p-toast position="center"></p-toast>
+<p-dialog [closable]="false" [(visible)]="loading" [modal]="true" [draggable]="false"
+    [resizable]="false" [style]="{width: '25vw'}" [breakpoints]="{ '960px': '75vw' }">
+    <div class="flex flex-column">
+        <div class="flex align-items-center justify-content-center">
+            <p-progressSpinner styleClass="w-8rem h-8rem" strokeWidth="4"></p-progressSpinner>
+        </div>
+        <div class="flex align-items-center justify-content-center">
+            <span class="text-2xl font-medium">Cargando</span>
+        </div>  
+    </div>
+</p-dialog>

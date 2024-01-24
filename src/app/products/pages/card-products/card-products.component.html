@@ -1,0 +1,19 @@
+<div class="grid">
+    <!-- Cargar arreglo de productos -->
+    <div *ngFor="let product of products"  class="col-12 md:col-6 lg:col-3 p-3">
+        <!-- crear fichas -->
+        <product-target-product  (IdProductDelete)="deleteProduct($event)" [product]="product"></product-target-product>
+    </div>
+</div>
+<p-toast position="bottom-right"></p-toast>
+<p-dialog [closable]="false" [(visible)]="loading" [modal]="true" [draggable]="false"
+    [resizable]="false" [style]="{width: '25vw'}" [breakpoints]="{ '960px': '75vw' }">
+    <div class="flex flex-column">
+        <div class="flex align-items-center justify-content-center">
+            <p-progressSpinner styleClass="w-8rem h-8rem" strokeWidth="4"></p-progressSpinner>
+        </div>
+        <div class="flex align-items-center justify-content-center">
+            <span class="text-2xl font-medium">Cargando</span>
+        </div>  
+    </div>
+</p-dialog>
